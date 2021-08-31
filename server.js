@@ -5,6 +5,8 @@ const connect = require("./config/dbConnect");
 
 const app = express();
 
+const APIS = require("./APIS");
+
 // database connection
 connect();
 
@@ -13,6 +15,7 @@ app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // apis
+app.use("/api", APIS);
 
 // listening server
 const port = process.env.PORT || 5000;
