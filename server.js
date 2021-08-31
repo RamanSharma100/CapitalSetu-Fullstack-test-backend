@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const connect = require("./config/dbConnect");
+const cors = require("cors");
 
 const app = express();
 
@@ -9,6 +10,8 @@ const APIS = require("./APIS");
 
 // database connection
 connect();
+
+app.use(cors());
 
 // parsing data to json
 app.use(bodyParser.json({ extended: true }));
