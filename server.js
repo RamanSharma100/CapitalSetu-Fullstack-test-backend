@@ -14,8 +14,8 @@ connect();
 app.use(cors());
 
 // parsing data to json
-app.use(bodyParser.json({ extended: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "30MB" }));
+app.use(bodyParser.json({ extended: true, limit: "30MB" }));
 
 // apis
 app.use("/api", APIS);

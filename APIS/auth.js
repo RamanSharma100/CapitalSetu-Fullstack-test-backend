@@ -72,7 +72,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-
+  console.log(req.body);
   if (!email || !password || !name) {
     return res
       .status(400)

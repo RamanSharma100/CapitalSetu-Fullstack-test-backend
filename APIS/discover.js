@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const authCheck = require("../middlewares/authCheck");
+const User = require("../models/User");
 
 const API_KEY = process.env.Movie_DB_API_KEY;
 const API_ENDPOINT = process.env.Mobive_DB_Discover_Movie_API;
@@ -37,6 +39,32 @@ router.get("/popular", async (req, res) => {
   });
 
   res.status(200).json({ succes: true, results: data });
+});
+
+// favorite movies
+router.get("/favorite", authCheck, async (req, res) => {
+  const { email } = req.query;
+
+  const { favoriteMovies } = await User.findOne({ email });
+  res.status(200).json({ succes: true, results: favoriteMovies });
+});
+router.post("/addFavorite", authCheck, async (req, res) => {
+  const { email, data } = req.body;
+
+  const { favoriteMovies } = await User.updateOne(
+    { email },
+    { $push: { favoriteMovies: data } }
+  );
+  res.status(200).json({ succes: true, results: favoriteMovies });
+});
+router.post("/removeFavorite", authCheck, async (req, res) => {
+  const { email, data } = req.body;
+
+  const { favoriteMovies } = await User.updateOne(
+    { email },
+    { $pull: { favoriteMovies: data } }
+  );
+  res.status(200).json({ succes: true, results: favoriteMovies });
 });
 
 module.exports = router;
