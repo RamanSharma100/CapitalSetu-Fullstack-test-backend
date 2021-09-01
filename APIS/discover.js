@@ -62,7 +62,7 @@ router.post("/removeFavorite", authCheck, async (req, res) => {
 
   const { favoriteMovies } = await User.updateOne(
     { email },
-    { $pull: { favoriteMovies: data } }
+    { $pull: { favoriteMovies: { poster_path: data.poster_path } } }
   );
   res.status(200).json({ succes: true, results: favoriteMovies });
 });

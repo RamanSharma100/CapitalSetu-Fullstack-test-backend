@@ -17,6 +17,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: "30MB" }));
 app.use(bodyParser.json({ extended: true, limit: "30MB" }));
 
+app.get("/", (req, res) => {
+  res.send("Movie Mania Server");
+});
+
 // apis
 app.use("/api", APIS);
 
